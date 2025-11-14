@@ -85,15 +85,24 @@
 
     <!-- 🗓️ SCHEDULE SECTION -->
     <section id="schedule" class="py-20 px-6 bg-neutral-200">
-        <h2 class="text-3xl font-bold text-center mb-6">Where We’ll Be</h2>
-        <p class="text-center mb-4">Follow our weekly route around the city!</p>
+        <h2 class="text-3xl font-bold text-center mb-3">Where We'll Be</h2>
+        <p class="text-center mb-8 text-gray-700">Our monthly schedule updates automatically.</p>
 
-        <div class="max-w-screen-md mx-auto text-center">
-            <ul class="space-y-3">
-                <li class="p-4 bg-white rounded shadow">Mon — Downtown • 11 AM – 3 PM</li>
-                <li class="p-4 bg-white rounded shadow">Wed — Central Park • 12 PM – 4 PM</li>
-                <li class="p-4 bg-white rounded shadow">Fri — Riverside • 5 PM – 9 PM</li>
-            </ul>
+        <!-- Today's Location Summary -->
+        <div id="todays-location"
+            class="text-center mb-10 text-lg font-semibold text-neutral-800">
+            Loading today’s location...
+        </div>
+
+        <!-- Google Calendar Embed -->
+        <div class="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-lg border bg-white">
+            <iframe 
+                src="https://calendar.google.com/calendar/embed?src=441a7ac8f0f5d10ca61c216b052f2e1977bd52855dff77e6f8f07105398af5bc%40group.calendar.google.com&ctz=America%2FChicago"
+                style="border:0"
+                class="w-full h-[650px]"
+                frameborder="0"
+                scrolling="no">
+            </iframe>
         </div>
     </section>
 
