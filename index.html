@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Truck | Philly Cheesesteak Co.</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP + ScrollTrigger CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Styles (optional) -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-neutral-100 text-gray-900">
+
+    <!-- 🔥 MOBILE NAV -->
+    <header class="w-full fixed top-0 left-0 z-50 bg-white shadow">
+        <div class="max-w-screen-xl mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="font-bold text-xl">Philly Cheesesteak Co.</h1>
+
+            <nav>
+                <ul class="flex space-x-4 text-sm">
+                    <li><a href="#menu" class="hover:text-red-500">Menu</a></li>
+                    <li><a href="#schedule" class="hover:text-red-500">Schedule</a></li>
+                    <li><a href="#story" class="hover:text-red-500">Our Story</a></li>
+                    <li><a href="#contact" class="hover:text-red-500">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Spacer for fixed nav -->
+    <div class="h-16"></div>
+
+    <!-- 🌟 HERO SECTION WITH CHEESESTEAK SCROLL ANIMATION -->
+    <section id="hero" class="relative h-[140vh] bg-neutral-900 flex items-center justify-center overflow-hidden">
+
+        <h2 class="absolute top-10 text-white text-3xl font-semibold text-center px-6">
+            The Ultimate Philly Cheesesteak Experience
+        </h2>
+
+        <div id="cheesesteak-builder" class="relative w-80 h-[80vh] mx-auto">
+            <!-- Replace with your transparent PNG layers -->
+            <img id="bread-bottom" src="assets/cheesesteak/1_bread_bottom.png"
+                 class="absolute inset-x-0 mx-auto w-full opacity-0">
+            <img id="steak" src="assets/cheesesteak/2_steak.png"
+                 class="absolute inset-x-0 mx-auto w-full opacity-0">
+            <img id="onions" src="assets/cheesesteak/3_onions.png"
+                 class="absolute inset-x-0 mx-auto w-full opacity-0">
+            <img id="cheese" src="assets/cheesesteak/4_cheese.png"
+                 class="absolute inset-x-0 mx-auto w-full opacity-0">
+            <img id="peppers" src="assets/cheesesteak/5_peppers.png"
+                 class="absolute inset-x-0 mx-auto w-full opacity-0">
+            <img id="sauce" src="assets/cheesesteak/6_sauce.png"
+                 class="absolute inset-x-0 mx-auto w-full opacity-0">
+            <img id="bread-top" src="assets/cheesesteak/7_bread_top.png"
+                 class="absolute inset-x-0 mx-auto w-full opacity-0">
+        </div>
+    </section>
+
+    <!-- 🧀 MENU SECTION -->
+    <section id="menu" class="py-20 px-6 max-w-screen-lg mx-auto">
+        <h2 class="text-3xl font-bold mb-6 text-center">Menu</h2>
+        <p class="text-center mb-8">Fresh, hot, and loaded with flavor.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="p-4 bg-white rounded-lg shadow">
+                <h3 class="text-xl font-semibold">Classic Philly</h3>
+                <p class="text-gray-600">Steak, grilled onions, melted cheese.</p>
+                <p class="mt-2 font-bold">$10.99</p>
+            </div>
+
+            <div class="p-4 bg-white rounded-lg shadow">
+                <h3 class="text-xl font-semibold">Loaded Cheesesteak</h3>
+                <p class="text-gray-600">Steak, onions, peppers, extra cheese.</p>
+                <p class="mt-2 font-bold">$12.99</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🗓️ SCHEDULE SECTION -->
+    <section id="schedule" class="py-20 px-6 bg-neutral-200">
+        <h2 class="text-3xl font-bold text-center mb-6">Where We’ll Be</h2>
+        <p class="text-center mb-4">Follow our weekly route around the city!</p>
+
+        <div class="max-w-screen-md mx-auto text-center">
+            <ul class="space-y-3">
+                <li class="p-4 bg-white rounded shadow">Mon — Downtown • 11 AM – 3 PM</li>
+                <li class="p-4 bg-white rounded shadow">Wed — Central Park • 12 PM – 4 PM</li>
+                <li class="p-4 bg-white rounded shadow">Fri — Riverside • 5 PM – 9 PM</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 📖 STORY SECTION -->
+    <section id="story" class="py-20 px-6 max-w-screen-lg mx-auto">
+        <h2 class="text-3xl font-bold mb-6 text-center">Our Story</h2>
+        <p class="text-gray-700 leading-relaxed text-lg">
+            Born from a passion for authentic Philly flavor, our food truck blends traditional taste 
+            with a modern twist. Scroll down and discover how our journey started...
+        </p>
+    </section>
+
+    <!-- 📞 CONTACT SECTION -->
+    <section id="contact" class="py-20 px-6 bg-neutral-900 text-white">
+        <h2 class="text-3xl font-bold text-center mb-6">Book the Food Truck</h2>
+
+        <p class="text-center mb-8">Catering • Events • Private Parties</p>
+
+        <div class="text-center">
+            <p class="text-lg">📧 Email: <a href="mailto:bookings@phillytruck.com" class="underline">bookings@phillytruck.com</a></p>
+            <p class="text-lg">📱 Phone: (555) 123-4567</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-sm text-gray-500">
+        © 2025 Philly Cheesesteak Co.
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
