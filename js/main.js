@@ -18,3 +18,17 @@ tl.from("#bread-bottom", { y: 150, opacity: 0 })
   .from("#peppers", { y: 190, opacity: 0 })
   .from("#sauce", { y: 200, opacity: 0 })
   .from("#bread-top", { y: -150, opacity: 0 });
+
+async function getCalendarEvents() {
+    try {
+        const response = await fetch('/.netlify/functions/fetchCalendar');
+        const icsText = await response.text();
+
+        console.log("ICS Data Loaded:", icsText);
+        // You can now parse the ICS or build your UI here
+    } catch (err) {
+        console.error("Calendar fetch error:", err);
+    }
+}
+
+getCalendarEvents();

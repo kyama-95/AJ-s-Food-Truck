@@ -95,53 +95,8 @@
         </div>
 
         <!-- Summary Logic-->
-        <script>
-            // Reads the public Google Calendar feed (ICS) to find today's event
-            async function loadTodaysLocation() {
-                const calendarID = "441a7ac8f0f5d10ca61c216b052f2e1977bd52855dff77e6f8f07105398af5bc@group.calendar.google.com";
-                const url = `https://calendar.google.com/calendar/ical/${calendarID}/public/basic.ics`;
-
-                try {
-                    const response = await fetch(url);
-                    const text = await response.text();
-
-                    const today = new Date().toISOString().split("T")[0];
-                    const events = text.split("BEGIN:VEVENT");
-
-                    let found = false;
-
-                    events.forEach(evt => {
-                        if (evt.includes("DTSTART")) {
-                            // Extract date in YYYYMMDD format
-                            const match = evt.match(/DTSTART.*:(\d{8})/);
-                            if (match) {
-                                const eventDate = match[1].slice(0,4) + "-" + match[1].slice(4,6) + "-" + match[1].slice(6,8);
-
-                                if (eventDate === today) {
-                                    found = true;
-
-                                    const summary = evt.match(/SUMMARY:(.*)/)?.[1] || "Food Truck Event";
-                                    const loc = evt.match(/LOCATION:(.*)/)?.[1] || "Location TBA";
-
-                                    document.getElementById("todays-location").innerHTML =
-                                        `<span class="text-xl font-bold">Today:</span> ${loc} • ${summary}`;
-                                }
-                            }
-                        }
-                    });
-
-                    if (!found) {
-                        document.getElementById("todays-location").innerHTML =
-                            "No events listed for today.";
-                    }
-                } catch (error) {
-                    document.getElementById("todays-location").innerHTML =
-                        "Unable to load today’s schedule.";
-                }
-            }
-
-            loadTodaysLocation();
-        </script>
+        <script src="js/main.js"></script>
+        
         <!-- Google Calendar Embed -->
         <div class="calendar-wrapper mx-auto max-w-4xl shadow-lg rounded-lg overflow-hidden">
             <div class="calendar-scaler">
