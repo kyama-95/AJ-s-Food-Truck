@@ -1,0 +1,19 @@
+.calendar-wrapper {
+    position: relative;
+    padding-top: 120%; /* Controls the aspect ratio (more space on mobile) */
+}
+
+.calendar-scaler {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scale(0.8);   /* Adjust for small screens */
+    transform-origin: top left;
+}
+
+.calendar-iframe {
+    width: 125%;  /* Must be larger than the scale amount */
+    height: 125%;
+    border: 0;
+}
