@@ -1,142 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Truck | Philly Cheesesteak Co.</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AJS Beef Supply</title>
 
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Tailwind CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- GSAP + ScrollTrigger CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <!-- GSAP + ScrollTrigger -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    </head>
 
-    <!-- Custom Styles (optional) -->
-    <link rel="stylesheet" href="css/styles.css">
-</head>
+        <body class="text-black bg-white overflow-x-hidden">
 
-<body class="bg-neutral-100 text-gray-900">
+            <!-- TOP NAV -->
+            <header class="w-full border-b bg-white fixed top-0 z-50">
+                <div class="max-w-screen-xl mx-auto px-4 py-3 flex justify-between items-center w-full">
+                    <div class="text-2xl font-black">AJBS</div>
+                    <nav class="space-x-6 text-sm font-semibold">
+                        <a href="#menu">MENU</a>
+                        <a href="#locations">LOCATIONS</a>
+                        <a href="#about">ABOUT</a>
+                        <a href="#booking">BOOKING</a>
+                    </nav>
+                </div>
+            </header>
 
-    <!-- 🔥 MOBILE NAV -->
-    <header class="w-full fixed top-0 left-0 z-50 bg-white shadow">
-        <div class="max-w-screen-xl mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="font-bold text-xl">Philly Cheesesteak Co.</h1>
+            <!-- SPACER FOR FIXED NAV -->
+            <div class="h-16"></div>
 
-            <nav>
-                <ul class="flex space-x-4 text-sm">
-                    <li><a href="#menu" class="hover:text-red-500">Menu</a></li>
-                    <li><a href="#schedule" class="hover:text-red-500">Schedule</a></li>
-                    <li><a href="#story" class="hover:text-red-500">Our Story</a></li>
-                    <li><a href="#contact" class="hover:text-red-500">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+            <!-- HERO – motion headline inspired by Maria Coassin site -->
+            <section id="hero" class="relative h-[80vh] bg-neutral-900 text-white overflow-hidden">
+            <div class="max-w-3xl mx-auto h-full px-6 flex flex-col justify-between py-10">
 
-    <!-- Spacer for fixed nav -->
-    <div class="h-16"></div>
+                <!-- Top: small label -->
+                <div class="text-sm tracking-[0.25em] uppercase text-neutral-400">
+                AJ’S BEEF SUPPLY
+                </div>
 
-    <!-- 🌟 HERO SECTION WITH CHEESESTEAK SCROLL ANIMATION -->
-    <section id="hero" class="relative h-[140vh] bg-neutral-900 flex items-center justify-center overflow-hidden">
+                <!-- Middle: repeated headline lines -->
+                <div class="space-y-2">
+                <p class="hero-line text-3xl font-black md:text-4xl">
+                    Learn, Eat, Be Happy with Beef.
+                </p>
+                <p class="hero-line text-3xl font-black md:text-4xl">
+                    Learn, Eat, Be Happy with Beef.
+                </p>
+                <p class="hero-line text-3xl font-black md:text-4xl">
+                    Learn, Eat, Be Happy with Beef.
+                </p>
+                </div>
 
-        <h2 class="absolute top-10 text-white text-3xl font-semibold text-center px-6">
-            The Ultimate Philly Cheesesteak Experience
-        </h2>
+                <!-- Bottom: short intro + scroll cue -->
+                <div class="flex items-center justify-between">
+                <p class="max-w-md text-sm md:text-base text-neutral-300 hero-copy">
+                    Philly-style cheesesteaks and chopped cheese sandwiches, rolling through North Alabama.
+                    Scroll to see the menu, locations, and how to book the truck.
+                </p>
 
-        <div id="cheesesteak-builder" class="relative w-80 h-[80vh] mx-auto">
-            <!-- Replace with your transparent PNG layers -->
-            <img id="bread-bottom" src="assets/cheesesteak/1_bread_bottom.png"
-                 class="absolute inset-x-0 mx-auto w-full opacity-0">
-            <img id="steak" src="assets/cheesesteak/2_steak.png"
-                 class="absolute inset-x-0 mx-auto w-full opacity-0">
-            <img id="onions" src="assets/cheesesteak/3_onions.png"
-                 class="absolute inset-x-0 mx-auto w-full opacity-0">
-            <img id="cheese" src="assets/cheesesteak/4_cheese.png"
-                 class="absolute inset-x-0 mx-auto w-full opacity-0">
-            <img id="peppers" src="assets/cheesesteak/5_peppers.png"
-                 class="absolute inset-x-0 mx-auto w-full opacity-0">
-            <img id="sauce" src="assets/cheesesteak/6_sauce.png"
-                 class="absolute inset-x-0 mx-auto w-full opacity-0">
-            <img id="bread-top" src="assets/cheesesteak/7_bread_top.png"
-                 class="absolute inset-x-0 mx-auto w-full opacity-0">
-        </div>
-    </section>
-
-    <!-- 🧀 MENU SECTION -->
-    <section id="menu" class="py-20 px-6 max-w-screen-lg mx-auto">
-        <h2 class="text-3xl font-bold mb-6 text-center">Menu</h2>
-        <p class="text-center mb-8">Fresh, hot, and loaded with flavor.</p>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div class="p-4 bg-white rounded-lg shadow">
-                <h3 class="text-xl font-semibold">Classic Philly</h3>
-                <p class="text-gray-600">Steak, grilled onions, melted cheese.</p>
-                <p class="mt-2 font-bold">$10.99</p>
+                <div class="flex flex-col items-center gap-1 hero-scroll">
+                    <span class="text-xs tracking-[0.2em] uppercase text-neutral-400">Scroll</span>
+                    <span class="w-px h-10 bg-neutral-500"></span>
+                </div>
+                </div>
             </div>
 
-            <div class="p-4 bg-white rounded-lg shadow">
-                <h3 class="text-xl font-semibold">Loaded Cheesesteak</h3>
-                <p class="text-gray-600">Steak, onions, peppers, extra cheese.</p>
-                <p class="mt-2 font-bold">$12.99</p>
-            </div>
-        </div>
-    </section>
+            <!-- Optional: placeholder background image area for later hero photo/video -->
+            <!-- <div class="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-neutral-800 opacity-40 hidden md:block">    
+            </div> -->
+            </section>
 
-    <!-- 🗓️ SCHEDULE SECTION -->
-    <section id="schedule" class="py-20 px-6 bg-neutral-200">
-        <h2 class="text-3xl font-bold text-center mb-3">Where We'll Be</h2>
-        <p class="text-center mb-8 text-gray-700">Our monthly schedule updates automatically.</p>
+            <!-- MENU SECTION -->
+            <section id="menu" class="px-6 py-16 max-w-3xl mx-auto">
+                <h2 class="text-4xl font-black mb-6">MENU</h2>
 
-        <!-- Today's Location Summary -->
-        <div id="todays-location"
-            class="text-center mb-10 text-lg font-semibold text-neutral-800">
-            Loading today’s location...
-        </div>
+                <div class="scroll-fade-left mb-10">
+                    <h3 class="text-3xl font-bold">CHEESESTEAK</h3>
+                    <p class="text-gray-700 mt-2">
+                        Thinly sliced ribeye, provolone cheese, hot & sweet peppers and onions served on an Italian roll. 
+                        Add BS Cheesesteak Sauce.
+                    </p>
+                </div>
 
-        <!-- Summary Logic-->
-        <script src="js/main.js"></script>
-        
-        <!-- Google Calendar Embed -->
-        <div class="calendar-wrapper mx-auto max-w-4xl shadow-lg rounded-lg overflow-hidden">
-            <div class="calendar-scaler">
-                <iframe
-                    src="https://calendar.google.com/calendar/embed?src=441a7ac8f0f5d10ca61c216b052f2e1977bd52855dff77e6f8f07105398af5bc%40group.calendar.google.com&ctz=America%2FChicago&mode=WEEK"
-                    frameborder="0"
-                    scrolling="no"
-                    class="calendar-iframe">
-                </iframe>
-            </div>
-        </div>
-    </section>
+                <div class="scroll-fade-right mb-10">
+                    <h3 class="text-3xl font-bold">CHOPPED CHEESE</h3>
+                    <p class="text-gray-700 mt-2">
+                        Burger patty chopped and seasoned, served on an Italian roll with lettuce, tomato, onions, pickles 
+                        and BS Chopped Cheese Sauce.
+                    </p>
+                </div>
 
-    <!-- 📖 STORY SECTION -->
-    <section id="story" class="py-20 px-6 max-w-screen-lg mx-auto">
-        <h2 class="text-3xl font-bold mb-6 text-center">Our Story</h2>
-        <p class="text-gray-700 leading-relaxed text-lg">
-            Born from a passion for authentic Philly flavor, our food truck blends traditional taste 
-            with a modern twist. Scroll down and discover how our journey started...
-        </p>
-    </section>
+                <p class="text-center font-semibold scroll-fade-left">
+                    FRIES | CANNED SODAS | BOTTLED WATER
+                </p>
+            </section>
 
-    <!-- 📞 CONTACT SECTION -->
-    <section id="contact" class="py-20 px-6 bg-neutral-900 text-white">
-        <h2 class="text-3xl font-bold text-center mb-6">Book the Food Truck</h2>
+            <!-- LOCATIONS (Google Calendar embed) -->
+            <section id="locations" class="px-6 py-16 max-w-3xl mx-auto">
+                <h2 class="text-4xl font-black mb-4 scroll-fade-left">LOCATIONS</h2>
+                <p class="mb-4 text-gray-700 scroll-fade-right">
+                    Find us at a North Alabama location near you. Our schedule updates automatically.
+                </p>
 
-        <p class="text-center mb-8">Catering • Events • Private Parties</p>
+                <div class="scroll-fade-left rounded-xl overflow-hidden shadow border">
+                    <iframe
+                        src="https://calendar.google.com/calendar/embed?src=441a7ac8f0f5d10ca61c216b052f2e1977bd52855dff77e6f8f07105398af5bc%40group.calendar.google.com&ctz=America%2FChicago&mode=WEEK"
+                        style="border:0"
+                        class="w-full h-[600px]"
+                        frameborder="0"
+                        scrolling="no">
+                    </iframe>
+                </div>
+            </section>
 
-        <div class="text-center">
-            <p class="text-lg">📧 Email: <a href="mailto:bookings@phillytruck.com" class="underline">bookings@phillytruck.com</a></p>
-            <p class="text-lg">📱 Phone: (555) 123-4567</p>
-        </div>
-    </section>
+            <!-- ABOUT -->
+            <section id="about" class="px-6 py-16 max-w-3xl mx-auto">
+                <h2 class="text-4xl font-black mb-4 scroll-fade-left">ABOUT</h2>
+                <p class="text-gray-700 scroll-fade-right leading-relaxed">
+                    Established in Huntsville, Alabama in 2025, AJ’s Beef Supply is a food truck serving a beef-driven menu—
+                    a rolling tribute to the beef dishes discovered during travels in Hawaii, Seattle, Portland, and Los Angeles.
+                </p>
+            </section>
 
-    <!-- Footer -->
-    <footer class="py-6 text-center text-sm text-gray-500">
-        © 2025 Philly Cheesesteak Co.
-    </footer>
+            <!-- BOOKING -->
+            <section id="booking" class="px-6 py-16 max-w-3xl mx-auto">
+                <h2 class="text-4xl font-black mb-6 scroll-fade-left">BOOKING / CONTACT</h2>
+                <p class="mb-6 scroll-fade-right">Fill out the contact form below and we’ll get connected.</p>
 
-    <!-- Custom JS -->
-    <script src="js/main.js"></script>
-</body>
+                <form class="space-y-4">
+                    <input class="w-full border p-3" placeholder="Name" />
+                    <input class="w-full border p-3" placeholder="Date of Event" />
+                    <input class="w-full border p-3" placeholder="Location of Event" />
+                    <input class="w-full border p-3" placeholder="Email" />
+                    <input class="w-full border p-3" placeholder="Phone Number" />
+                </form>
+            </section>
+
+            <!-- BOTTOM NAV (mobile style) -->
+            <footer class="w-full fixed bottom-0 bg-white border-t py-3 z-50">
+                <div class="flex justify-center space-x-8 text-sm font-semibold">
+                    <a href="#menu">MENU</a>
+                    <a href="#locations">LOCATIONS</a>
+                    <a href="#about">ABOUT</a>
+                    <a href="#booking">BOOKING</a>
+                </div>
+            </footer>
+
+            <!-- Main Motion Script -->
+            <script src="js/main.js"></script>
+
+        </body>
 </html>

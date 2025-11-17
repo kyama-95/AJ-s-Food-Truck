@@ -1,34 +1,83 @@
-// Register plugin
 gsap.registerPlugin(ScrollTrigger);
 
-// Master scroll timeline for assembling the cheesesteak
-const tl = gsap.timeline({
-    scrollTrigger: {
-        trigger: "#hero",
-        start: "top top",
-        end: "bottom center",
-        scrub: true,
-    }
+/* ---------------- HERO ANIMATIONS ---------------- */
+
+gsap.from(".hero-line", {
+  y: 40,
+  opacity: 0,
+  stagger: 0.15,
+  duration: 0.8,
+  ease: "power3.out"
 });
 
-tl.from("#bread-bottom", { y: 150, opacity: 0 })
-  .from("#steak", { y: 160, opacity: 0 })
-  .from("#onions", { y: 170, opacity: 0 })
-  .from("#cheese", { y: 180, opacity: 0 })
-  .from("#peppers", { y: 190, opacity: 0 })
-  .from("#sauce", { y: 200, opacity: 0 })
-  .from("#bread-top", { y: -150, opacity: 0 });
+gsap.from(".hero-copy", {
+  y: 30,
+  opacity: 0,
+  delay: 0.3,
+  duration: 0.8,
+  ease: "power3.out"
+});
 
-async function getCalendarEvents() {
-    try {
-        const response = await fetch('/.netlify/functions/fetchCalendar');
-        const icsText = await response.text();
+gsap.from(".hero-scroll", {
+  y: 20,
+  opacity: 0,
+  delay: 0.5,
+  duration: 0.6,
+  ease: "power3.out"
+});
 
-        console.log("ICS Data Loaded:", icsText);
-        // You can now parse the ICS or build your UI here
-    } catch (err) {
-        console.error("Calendar fetch error:", err);
+// Desktop/tablet drifting only
+let mm = gsap.matchMedia();
+
+mm.add("(min-width: 640px)", () => {
+  const heroTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: "#hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: true
     }
-}
+  });
 
-getCalendarEvents();
+  heroTimeline
+    .to(".hero-line:nth-child(1)", { x: -40 }, 0)
+    .to(".hero-line:nth-child(2)", { x: 40 }, 0)
+    .to(".hero-line:nth-child(3)", { x: -20 }, 0)
+    .to(".hero-copy", { y: -20 }, 0.1)
+    .to(".hero-scroll", { y: 20, opacity: 0.3 }, 0.1);
+});
+
+// No horizontal motion on mobile
+mm.add("(max-width: 639px)", () => {
+    gsap.set(".hero-line", { x: 0 });
+    gsap.set(".hero-copy", { x: 0 });
+    gsap.set(".hero-scroll", { x: 0 });
+});
+
+
+
+/* ---------------- SECTION SLIDE-INS (Reversible) ---------------- */
+
+gsap.utils.toArray(".scroll-fade-left").forEach(elem => {
+  gsap.from(elem, {
+    x: -80,
+    opacity: 0,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: elem,
+      start: "top 95%"
+    }
+  });
+});
+
+gsap.utils.toArray(".scroll-fade-right").forEach(elem => {
+  gsap.from(elem, {
+    x: 80,
+    opacity: 0,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: elem,
+      start: "top 95%"
+    }
+  });
+});
