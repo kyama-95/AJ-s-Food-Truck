@@ -1,19 +1,50 @@
-.calendar-wrapper {
-    position: relative;
-    padding-top: 120%; /* Controls the aspect ratio (more space on mobile) */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-.calendar-scaler {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    transform: scale(0.8);   /* Adjust for small screens */
-    transform-origin: top left;
+/* Footer links never wrap */
+#footerNav > a {
+  white-space: nowrap;
 }
 
-.calendar-iframe {
-    width: 125%;  /* Must be larger than the scale amount */
-    height: 125%;
-    border: 0;
+.footer-link {
+  position: relative;
+  z-index: 5;
+  transition: color 0.25s ease;
+}
+
+/* Pill transitions */
+#pill {
+  transition: all 0.3s ease;
+}
+
+/* Touch blocker to prevent iframe hijacking taps */
+.footer-touch-blocker {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px; /* match the footer height */
+  z-index: 9998;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* Footer sits above everything */
+footer {
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+footer * {
+  pointer-events: auto;
+}
+
+/* Shrink footer text on tiny mobile screens */
+@media (max-width: 380px) {
+  #footerNav {
+    font-size: 0.8rem;
+  }
 }

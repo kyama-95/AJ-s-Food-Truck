@@ -1,179 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AJS Beef Supply</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>AJ’s Beef Supply</title>
 
-        <!-- Tailwind CDN -->
-        <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-        <!-- GSAP + ScrollTrigger -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    </head>
-    <style>
-        html, body {
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-    </style>
+    <!-- GSAP + ScrollTrigger + ScrollTo -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+  </head>
 
-        <body class="text-black bg-white overflow-x-hidden">
+  <body class="bg-white text-black overflow-x-hidden">
+    <!-- TOP NAV -->
+    <header class="w-full border-b bg-white fixed top-0 z-50">
+      <div class="w-full px-4 py-3 flex justify-between items-center">
+        <!-- Logo -->
+        <div class="text-2xl font-black">AJBS</div>
 
-            <!-- TOP NAV -->
-            <header class="w-full border-b bg-white fixed top-0 z-50">
-                <div class="w-full px-4 py-3 flex justify-between items-center">
+        <!-- Desktop nav -->
+        <nav class="hidden sm:flex space-x-6 text-sm font-semibold">
+          <a href="#hero">AJBS</a>
+          <a href="#menu">MENU</a>
+          <a href="#locations">LOCATIONS</a>
+          <a href="#about">ABOUT</a>
+          <a href="#booking">BOOKING</a>
+        </nav>
 
-                    <!-- Logo -->
-                    <div class="text-2xl font-black">AJBS</div>
+        <!-- Mobile hamburger -->
+        <button id="mobileMenuBtn" class="sm:hidden text-3xl font-bold">☰</button>
+      </div>
 
-                    <!-- DESKTOP NAV -->
-                    <nav class="hidden sm:flex space-x-6 text-sm font-semibold">
-                    <a href="#menu">MENU</a>
-                    <a href="#locations">LOCATIONS</a>
-                    <a href="#about">ABOUT</a>
-                    <a href="#booking">BOOKING</a>
-                    </nav>
+      <!-- Mobile dropdown -->
+      <div
+        id="mobileMenu"
+        class="hidden sm:hidden flex-col bg-white border-t px-4 py-3 space-y-3 text-base font-semibold"
+      >
+        <a href="#hero">AJBS</a>
+        <a href="#menu">MENU</a>
+        <a href="#locations">LOCATIONS</a>
+        <a href="#about">ABOUT</a>
+        <a href="#booking">BOOKING</a>
+      </div>
+    </header>
 
-                    <!-- MOBILE MENU BUTTON -->
-                    <button id="mobileMenuBtn" class="sm:hidden text-3xl font-bold">
-                    ☰
-                    </button>
-                </div>
+    <!-- spacer for fixed header -->
+    <div class="h-16"></div>
 
-                <!-- MOBILE DROPDOWN MENU -->
-                <div id="mobileMenu" class="hidden sm:hidden flex-col bg-white border-t px-4 py-3 space-y-3 text-base font-semibold">
-                    <a href="#menu" class="block">MENU</a>
-                    <a href="#locations" class="block">LOCATIONS</a>
-                    <a href="#about" class="block">ABOUT</a>
-                    <a href="#booking" class="block">BOOKING</a>
-                </div>
-            </header>
+    <!-- HERO / AJBS SECTION -->
+    <section id="hero" class="w-full pt-24 pb-32">
+      <div class="max-w-3xl mx-auto px-6 flex flex-col justify-between gap-10">
+        <div class="text-sm tracking-[0.25em] uppercase text-neutral-500">
+          AJ’S BEEF SUPPLY
+        </div>
 
-            <!-- SPACER FOR FIXED NAV -->
-            <div class="h-16"></div>
+        <div class="space-y-2">
+          <p class="hero-line text-3xl md:text-4xl font-black">Learn, Eat, Be Happy with Beef.</p>
+          <p class="hero-line text-3xl md:text-4xl font-black">Learn, Eat, Be Happy with Beef.</p>
+          <p class="hero-line text-3xl md:text-4xl font-black">Learn, Eat, Be Happy with Beef.</p>
+        </div>
 
-            <!-- HERO – motion headline inspired by Maria Coassin site -->
-            <section id="hero" class="relative h-[80vh] bg-neutral-900 text-white overflow-hidden">
-            <div class="max-w-3xl mx-auto h-full px-6 flex flex-col justify-between py-10">
+        <div class="flex items-center justify-between">
+          <p class="max-w-md text-sm md:text-base text-neutral-700 hero-copy">
+            Philly-style cheesesteaks and chopped cheese sandwiches, rolling
+            through North Alabama. Scroll to see the menu, locations, and how to
+            book the truck.
+          </p>
 
-                <!-- Top: small label -->
-                <div class="text-sm tracking-[0.25em] uppercase text-neutral-400">
-                AJ’S BEEF SUPPLY
-                </div>
+          <div class="hidden md:flex flex-col items-center gap-1 hero-scroll">
+            <span class="text-xs tracking-[0.2em] uppercase text-neutral-500">Scroll</span>
+            <span class="w-px h-10 bg-neutral-400"></span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                <!-- Middle: repeated headline lines -->
-                <div class="space-y-2">
-                <p class="hero-line text-3xl font-black md:text-4xl">
-                    Learn, Eat, Be Happy with Beef.
-                </p>
-                <p class="hero-line text-3xl font-black md:text-4xl">
-                    Learn, Eat, Be Happy with Beef.
-                </p>
-                <p class="hero-line text-3xl font-black md:text-4xl">
-                    Learn, Eat, Be Happy with Beef.
-                </p>
-                </div>
+    <!-- MENU -->
+    <section id="menu" class="w-full pt-28 pb-32">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-black mb-6 scroll-fade-left">MENU</h2>
 
-                <!-- Bottom: short intro + scroll cue -->
-                <div class="flex items-center justify-between">
-                <p class="max-w-md text-sm md:text-base text-neutral-300 hero-copy">
-                    Philly-style cheesesteaks and chopped cheese sandwiches, rolling through North Alabama.
-                    Scroll to see the menu, locations, and how to book the truck.
-                </p>
+        <div class="scroll-fade-left mb-10">
+          <h3 class="text-3xl font-bold">CHEESESTEAK</h3>
+          <p class="text-gray-700 mt-2">
+            Thinly sliced ribeye, provolone cheese, hot & sweet peppers and
+            onions served on an Italian roll. Add BS Cheesesteak Sauce.
+          </p>
+        </div>
 
-                <div class="flex flex-col items-center gap-1 hero-scroll">
-                    <span class="text-xs tracking-[0.2em] uppercase text-neutral-400">Scroll</span>
-                    <span class="w-px h-10 bg-neutral-500"></span>
-                </div>
-                </div>
-            </div>
+        <div class="scroll-fade-right mb-10">
+          <h3 class="text-3xl font-bold">CHOPPED CHEESE</h3>
+          <p class="text-gray-700 mt-2">
+            Burger patty chopped and seasoned, served on an Italian roll with
+            lettuce, tomato, onions, pickles and BS Chopped Cheese Sauce.
+          </p>
+        </div>
 
-            <!-- Optional: placeholder background image area for later hero photo/video -->
-            <div 
-                class="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-neutral-800 opacity-40 hidden md:block">    
-            </div>
-            </section>
+        <p class="text-center font-semibold scroll-fade-left">
+          FRIES | CANNED SODAS | BOTTLED WATER
+        </p>
+      </div>
+    </section>
 
-            <!-- MENU SECTION -->
-            <section id="menu" class="px-6 py-16 max-w-3xl mx-auto">
-                <h2 class="text-4xl font-black mb-6">MENU</h2>
+    <!-- LOCATIONS -->
+    <section id="locations" class="w-full pt-28 pb-32">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-black mb-4 scroll-fade-left">LOCATIONS</h2>
+        <p class="mb-4 text-gray-700 scroll-fade-right">
+          Find us at a North Alabama location near you. Our schedule updates automatically.
+        </p>
 
-                <div class="scroll-fade-left mb-10">
-                    <h3 class="text-3xl font-bold">CHEESESTEAK</h3>
-                    <p class="text-gray-700 mt-2">
-                        Thinly sliced ribeye, provolone cheese, hot & sweet peppers and onions served on an Italian roll. 
-                        Add BS Cheesesteak Sauce.
-                    </p>
-                </div>
+        <div class="scroll-fade-left rounded-xl overflow-hidden shadow border w-full">
+          <iframe
+            src="https://calendar.google.com/calendar/embed?src=441a7ac8f0f5d10ca61c216b052f2e1977bd52855dff77e6f8f07105398af5bc%40group.calendar.google.com&ctz=America%2FChicago&mode=WEEK"
+            class="w-full h-[600px]"
+            frameborder="0"
+          ></iframe>
+        </div>
+      </div>
+    </section>
 
-                <div class="scroll-fade-right mb-10">
-                    <h3 class="text-3xl font-bold">CHOPPED CHEESE</h3>
-                    <p class="text-gray-700 mt-2">
-                        Burger patty chopped and seasoned, served on an Italian roll with lettuce, tomato, onions, pickles 
-                        and BS Chopped Cheese Sauce.
-                    </p>
-                </div>
+    <!-- ABOUT -->
+    <section id="about" class="w-full pt-28 pb-32">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-black mb-4 scroll-fade-left">ABOUT</h2>
+        <p class="text-gray-700 scroll-fade-right leading-relaxed">
+          Established in Huntsville, Alabama in 2025, AJ’s Beef Supply is a food
+          truck serving a beef-driven menu—a rolling tribute to the beef dishes
+          discovered during travels in Hawaii, Seattle, Portland, and Los Angeles.
+        </p>
+      </div>
+    </section>
 
-                <p class="text-center font-semibold scroll-fade-left">
-                    FRIES | CANNED SODAS | BOTTLED WATER
-                </p>
-            </section>
+    <!-- BOOKING -->
+    <section id="booking" class="w-full pt-28 pb-40">
+      <div class="max-w-3xl mx-auto px-6">
+        <h2 class="text-4xl font-black mb-6 scroll-fade-left">BOOKING / CONTACT</h2>
+        <p class="mb-6 scroll-fade-right">
+          Fill out the contact form below and we’ll get connected.
+        </p>
 
-            <!-- LOCATIONS (Google Calendar embed) -->
-            <section id="locations" class="px-6 py-16 max-w-3xl mx-auto">
-                <h2 class="text-4xl font-black mb-4 scroll-fade-left">LOCATIONS</h2>
-                <p class="mb-4 text-gray-700 scroll-fade-right">
-                    Find us at a North Alabama location near you. Our schedule updates automatically.
-                </p>
+        <form class="space-y-4">
+          <input class="w-full border p-3" placeholder="Name" />
+          <input class="w-full border p-3" placeholder="Date of Event" />
+          <input class="w-full border p-3" placeholder="Location of Event" />
+          <input class="w-full border p-3" placeholder="Email" />
+          <input class="w-full border p-3" placeholder="Phone Number" />
+        </form>
+      </div>
+    </section>
 
-                <div class="scroll-fade-left rounded-xl overflow-hidden shadow border">
-                    <iframe
-                        src="https://calendar.google.com/calendar/embed?src=441a7ac8f0f5d10ca61c216b052f2e1977bd52855dff77e6f8f07105398af5bc%40group.calendar.google.com&ctz=America%2FChicago&mode=WEEK"
-                        style="border:0"
-                        class="w-full h-[600px]"
-                        frameborder="0"
-                        scrolling="no">
-                    </iframe>
-                </div>
-            </section>
+    <div class="footer-touch-blocker"></div>
 
-            <!-- ABOUT -->
-            <section id="about" class="px-6 py-16 max-w-3xl mx-auto">
-                <h2 class="text-4xl font-black mb-4 scroll-fade-left">ABOUT</h2>
-                <p class="text-gray-700 scroll-fade-right leading-relaxed">
-                    Established in Huntsville, Alabama in 2025, AJ’s Beef Supply is a food truck serving a beef-driven menu—
-                    a rolling tribute to the beef dishes discovered during travels in Hawaii, Seattle, Portland, and Los Angeles.
-                </p>
-            </section>
+    <!-- FOOTER NAV -->
+    <footer class="fixed bottom-0 left-0 w-full h-16 bg-black z-50 flex items-center">
+      <div id="footerWrapper" class="relative mx-auto">
+        <nav id="footerNav" class="relative inline-flex items-center justify-center space-x-4 text-white text-sm font-semibold">
 
-            <!-- BOOKING -->
-            <section id="booking" class="px-6 py-16 max-w-3xl mx-auto">
-                <h2 class="text-4xl font-black mb-6 scroll-fade-left">BOOKING / CONTACT</h2>
-                <p class="mb-6 scroll-fade-right">Fill out the contact form below and we’ll get connected.</p>
+          <div id="pill" class="absolute top-1/2 -translate-y-1/2 left-0 h-7 bg-white rounded-full -z-10"></div>
 
-                <form class="space-y-4">
-                    <input class="w-full border p-3" placeholder="Name" />
-                    <input class="w-full border p-3" placeholder="Date of Event" />
-                    <input class="w-full border p-3" placeholder="Location of Event" />
-                    <input class="w-full border p-3" placeholder="Email" />
-                    <input class="w-full border p-3" placeholder="Phone Number" />
-                </form>
-            </section>
+          <a href="#hero" data-target="hero" class="footer-link">AJBS</a>
+          <a href="#menu" data-target="menu" class="footer-link">MENU</a>
+          <a href="#locations" data-target="locations" class="footer-link">LOCATIONS</a>
+          <a href="#about" data-target="about" class="footer-link">ABOUT</a>
+          <a href="#booking" data-target="booking" class="footer-link">BOOKING</a>
 
-            <!-- BOTTOM NAV (mobile style) -->
-            <footer class="w-full fixed bottom-0 bg-white border-t py-3 z-50">
-                <div class="flex justify-center space-x-8 text-sm font-semibold">
-                    <a href="#menu">MENU</a>
-                    <a href="#locations">LOCATIONS</a>
-                    <a href="#about">ABOUT</a>
-                    <a href="#booking">BOOKING</a>
-                </div>
-            </footer>
+        </nav>
+      </div>
+    </footer>
 
-            <!-- Main Motion Script -->
-            <script src="js/main.js"></script>
-
-        </body>
+    <script src="js/main.js"></script>
+  </body>
 </html>
