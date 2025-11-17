@@ -12,19 +12,42 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     </head>
+    <style>
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+    </style>
 
         <body class="text-black bg-white overflow-x-hidden">
 
             <!-- TOP NAV -->
             <header class="w-full border-b bg-white fixed top-0 z-50">
-                <div class="max-w-screen-xl mx-auto px-4 py-3 flex justify-between items-center w-full">
+                <div class="w-full px-4 py-3 flex justify-between items-center">
+
+                    <!-- Logo -->
                     <div class="text-2xl font-black">AJBS</div>
-                    <nav class="space-x-6 text-sm font-semibold">
-                        <a href="#menu">MENU</a>
-                        <a href="#locations">LOCATIONS</a>
-                        <a href="#about">ABOUT</a>
-                        <a href="#booking">BOOKING</a>
+
+                    <!-- DESKTOP NAV -->
+                    <nav class="hidden sm:flex space-x-6 text-sm font-semibold">
+                    <a href="#menu">MENU</a>
+                    <a href="#locations">LOCATIONS</a>
+                    <a href="#about">ABOUT</a>
+                    <a href="#booking">BOOKING</a>
                     </nav>
+
+                    <!-- MOBILE MENU BUTTON -->
+                    <button id="mobileMenuBtn" class="sm:hidden text-3xl font-bold">
+                    ☰
+                    </button>
+                </div>
+
+                <!-- MOBILE DROPDOWN MENU -->
+                <div id="mobileMenu" class="hidden sm:hidden flex-col bg-white border-t px-4 py-3 space-y-3 text-base font-semibold">
+                    <a href="#menu" class="block">MENU</a>
+                    <a href="#locations" class="block">LOCATIONS</a>
+                    <a href="#about" class="block">ABOUT</a>
+                    <a href="#booking" class="block">BOOKING</a>
                 </div>
             </header>
 
@@ -68,8 +91,9 @@
             </div>
 
             <!-- Optional: placeholder background image area for later hero photo/video -->
-            <!-- <div class="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-neutral-800 opacity-40 hidden md:block">    
-            </div> -->
+            <div 
+                class="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-neutral-800 opacity-40 hidden md:block">    
+            </div>
             </section>
 
             <!-- MENU SECTION -->

@@ -1,6 +1,6 @@
 gsap.registerPlugin(ScrollTrigger);
 
-/* ---------------- HERO ANIMATIONS ---------------- */
+/* ---------------- HERO INTRO ANIMATIONS ---------------- */
 
 gsap.from(".hero-line", {
   y: 40,
@@ -26,10 +26,13 @@ gsap.from(".hero-scroll", {
   ease: "power3.out"
 });
 
-// Desktop/tablet drifting only
+/* ---------------- HERO DRIFT (DESKTOP ONLY) ---------------- */
+
 let mm = gsap.matchMedia();
 
 mm.add("(min-width: 640px)", () => {
+  const lines = gsap.utils.toArray(".hero-line");
+
   const heroTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: "#hero",
@@ -40,23 +43,22 @@ mm.add("(min-width: 640px)", () => {
   });
 
   heroTimeline
-    .to(".hero-line:nth-child(1)", { x: -40 }, 0)
-    .to(".hero-line:nth-child(2)", { x: 40 }, 0)
-    .to(".hero-line:nth-child(3)", { x: -20 }, 0)
+    .to(lines[0], { x: -40 }, 0)
+    .to(lines[1], { x: 40 }, 0)
+    .to(lines[2], { x: -20 }, 0)
     .to(".hero-copy", { y: -20 }, 0.1)
     .to(".hero-scroll", { y: 20, opacity: 0.3 }, 0.1);
 });
 
-// No horizontal motion on mobile
+/* ---------------- MOBILE RESET ---------------- */
+
 mm.add("(max-width: 639px)", () => {
-    gsap.set(".hero-line", { x: 0 });
-    gsap.set(".hero-copy", { x: 0 });
-    gsap.set(".hero-scroll", { x: 0 });
+  gsap.set(".hero-line", { x: 0 });
+  gsap.set(".hero-copy", { x: 0 });
+  gsap.set(".hero-scroll", { x: 0 });
 });
 
-
-
-/* ---------------- SECTION SLIDE-INS (Reversible) ---------------- */
+/* ---------------- SECTION SLIDE-INS (REVERSIBLE) ---------------- */
 
 gsap.utils.toArray(".scroll-fade-left").forEach(elem => {
   gsap.from(elem, {
@@ -65,7 +67,7 @@ gsap.utils.toArray(".scroll-fade-left").forEach(elem => {
     ease: "power2.out",
     scrollTrigger: {
       trigger: elem,
-      start: "top 95%"
+      start: "top 85%"
     }
   });
 });
@@ -77,7 +79,15 @@ gsap.utils.toArray(".scroll-fade-right").forEach(elem => {
     ease: "power2.out",
     scrollTrigger: {
       trigger: elem,
-      start: "top 95%"
+      start: "top 85%"
     }
   });
+});
+
+/* ---------------- HAMBURGER MENU MOBILE  ---------------- */
+const mobileBtn = document.getElementById("mobileMenuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+mobileBtn.addEventListener("click", () => {
+  mobileMenu.classList.toggle("hidden");
 });
