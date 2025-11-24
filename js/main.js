@@ -27,8 +27,7 @@ gsap.utils.toArray(".scroll-fade-left").forEach((elem) => {
     ease: "power2.out",
     scrollTrigger: {
       trigger: elem,
-      start: "top 85%",
-      scrub: true,
+      start: "top 85%"
     },
   });
 });
@@ -40,8 +39,7 @@ gsap.utils.toArray(".scroll-fade-right").forEach((elem) => {
     ease: "power2.out",
     scrollTrigger: {
       trigger: elem,
-      start: "top 85%",
-      scrub: true,
+      start: "top 85%"
     },
   });
 });
