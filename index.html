@@ -18,7 +18,7 @@
 
     <!-- Tailwind CDN -->
     <link rel="stylesheet" href="css/styles.css">
-    
+
     <!-- GSAP + ScrollTrigger + ScrollTo -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -158,12 +158,61 @@
           Fill out the contact form below and we’ll get connected.
         </p>
 
-        <form class="space-y-4">
-          <input class="w-full border p-3" placeholder="Name" />
-          <input class="w-full border p-3" placeholder="Date of Event" />
-          <input class="w-full border p-3" placeholder="Location of Event" />
-          <input class="w-full border p-3" placeholder="Email" />
-          <input class="w-full border p-3" placeholder="Phone Number" />
+        <form name="booking" method="POST" data-netlify="true" class="space-y-4">
+
+          <input 
+            class="w-full border p-3"
+            type="text"
+            name="name"
+            placeholder="Name"
+            required
+          />
+
+          <input 
+            class="w-full border p-3"
+            type="text"
+            name="event_date"
+            placeholder="Date of Event"
+            required
+          />
+
+          <input 
+            class="w-full border p-3"
+            type="text"
+            name="location"
+            placeholder="Location of Event"
+            required
+          />
+
+          <input 
+            class="w-full border p-3"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+
+          <input 
+            class="w-full border p-3"
+            type="tel"
+            name="phone"
+            placeholder="Phone Number"
+            required
+          />
+
+          <!-- Optional anti-spam honeypot for Netlify -->
+          <input type="hidden" name="form-name" value="booking">
+          <p class="hidden">
+            <label>Don’t fill this out: <input name="bot-field"></label>
+          </p>
+
+          <button
+            type="submit"
+            class="bg-black text-white px-4 py-3 w-full rounded font-semibold"
+          >
+            Submit
+          </button>
+
         </form>
       </div>
     </section>
