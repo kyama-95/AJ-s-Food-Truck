@@ -142,5 +142,81 @@ if (links.length === 5) {
 
   movePillTo(ajbs, true);
 }
+/* ===============================
+   FORM ENHANCEMENTS: LIVE VALIDATION
+   =============================== */
 
+// PHONE AUTO-FORMATTER
+const phoneInput = document.querySelector("input[name='phone']");
+if (phoneInput) {
+  phoneInput.addEventListener("input", (e) => {
+    let value = e.target.value.replace(/\D/g, ""); // digits only
+
+    if (value.length > 3 && value.length <= 6) {
+      value = `${value.slice(0, 3)}-${value.slice(3)}`;
+    } else if (value.length > 6) {
+      value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
+    }
+
+    e.target.value = value;
+  });
+}
+
+// LIVE FIELD VALIDATION (with red border + message)
+const form = document.querySelector("form[name='booking']");
+if (form) {
+  const fields = form.querySelectorAll("input[required]");
+
+  fields.forEach((field) => {
+    const errorMessage = document.createElement("p");
+    errorMessage.className = "text-red-600 text-xs mt-1 hidden";
+    field.insertAdjacentElement("afterend", errorMessage);
+
+    field.addEventListener("input", () => {
+      if (field.validity.valid) {
+        field.classList.remove("border-red-600");
+        errorMessage.classList.add("hidden");
+      } else {
+        field.classList.add("border-red-600");
+        errorMessage.classList.remove("hidden");
+
+        if (field.validity.valueMissing) {
+          errorMessage.textContent = "This field is required.";
+        } else if (field.validity.typeMismatch) {
+          errorMessage.textContent = "Please enter a valid value.";
+        } else if (field.validity.patternMismatch) {
+          if (field.name === "phone") {
+            errorMessage.textContent = "Format must be 555-123-4567.";
+          }
+        } else if (field.validity.tooShort) {
+          errorMessage.textContent = `Please enter at least ${field.minLength} characters.`;
+        } else {
+          errorMessage.textContent = "Invalid input.";
+        }
+      }
+    });
+  });
+
+  // PREVENT SUBMISSION IF ANY FIELD IS INVALID
+  form.addEventListener("submit", (e) => {
+    let hasError = false;
+
+    fields.forEach((field) => {
+      if (!field.validity.valid) {
+        hasError = true;
+        field.classList.add("border-red-600");
+        field.nextElementSibling.classList.remove("hidden");
+
+        if (field.validity.patternMismatch && field.name === "phone") {
+          field.nextElementSibling.textContent = "Format must be 555-123-4567.";
+        }
+      }
+    });
+
+    if (hasError) {
+      e.preventDefault();
+      alert("Please correct the highlighted fields before submitting.");
+    }
+  });
+}
 /* ---------------- END ---------------- */
