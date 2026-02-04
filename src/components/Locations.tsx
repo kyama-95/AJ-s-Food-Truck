@@ -1,6 +1,12 @@
+import { useRef } from "react";
+import useScrollFades from "../hooks/useScrollFades";
+
 export default function Locations() {
+  const sectionRef = useRef<HTMLElement>(null);
+  useScrollFades(sectionRef);
+
   return (
-    <section id="locations" className="w-full pt-28 pb-32">
+    <section ref={sectionRef} id="locations" className="w-full pt-28 pb-32">
       <div className="max-w-3xl mx-auto px-6">
         <h2 className="text-4xl font-black mb-4 scroll-fade-left">LOCATIONS</h2>
         <p className="mb-4 text-gray-700 scroll-fade-right">

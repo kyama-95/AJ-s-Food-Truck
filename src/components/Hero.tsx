@@ -1,6 +1,37 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.from(".hero-line", {
+        y: 40,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+
+      gsap.from(".hero-copy", {
+        y: 30,
+        opacity: 0,
+        delay: 0.3,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
+
   return (
-    <section id="hero" className="w-full pt-24 pb-32">
+    <section ref={sectionRef} id="hero" className="w-full pt-24 pb-32">
       <div className="max-w-3xl mx-auto px-6 flex flex-col justify-between gap-10">
         <div className="text-sm tracking-[0.25em] uppercase text-neutral-500">
           AJ’S BEEF SUPPLY

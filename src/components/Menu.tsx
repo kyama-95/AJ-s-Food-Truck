@@ -1,6 +1,12 @@
+import { useRef } from "react";
+import useScrollFades from "../hooks/useScrollFades";
+
 export default function Menu() {
+  const sectionRef = useRef<HTMLElement>(null);
+  useScrollFades(sectionRef);
+
   return (
-    <section id="menu" className="w-full pt-28 pb-32">
+    <section ref={sectionRef} id="menu" className="w-full pt-28 pb-32">
       <div className="max-w-3xl mx-auto px-6">
         <h2 className="text-4xl font-black mb-6 scroll-fade-left">MENU</h2>
 
