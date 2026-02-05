@@ -5,3 +5,7 @@
 body {
   margin: 0;
 }
+
+section {
+  scroll-margin-top: 96px;
+}

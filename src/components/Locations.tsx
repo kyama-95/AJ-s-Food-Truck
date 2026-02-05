@@ -27,7 +27,7 @@ const Locations = forwardRef<HTMLElement>(function Locations(_, ref) {
           className="rounded-xl overflow-hidden shadow border w-full"
         >
           <iframe
-            src="https://calendar.google.com/calendar/embed?src=ajsbeefsupply%40gmail.com&ctz=America%2FChicago&mode=WEEK"
+            src="https://calendar.google.com/calendar/embed?src=ajsbeefsupply%40gmail.com&ctz=America%2FChicago"
             className="w-full h-[600px]"
             frameBorder={0}
             title="AJBS Calendar"

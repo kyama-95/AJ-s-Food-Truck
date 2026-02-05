@@ -16,6 +16,7 @@ type FooterProps = {
 
 export default function Footer({ sections }: FooterProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const footerRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
   const linkRefs = useRef<Array<HTMLAnchorElement | null>>([]);
 
@@ -26,6 +27,10 @@ export default function Footer({ sections }: FooterProps) {
     if (!wrapper || !pill) return;
 
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+    const headerElement = document.querySelector("header");
+    const headerOffset = headerElement?.offsetHeight ?? 0;
+    const footerOffset = footerRef.current?.offsetHeight ?? 0;
 
     const links = linkRefs.current.filter(
       (link): link is HTMLAnchorElement => Boolean(link)
@@ -58,7 +63,8 @@ export default function Footer({ sections }: FooterProps) {
 
       const handler = (event: Event) => {
         event.preventDefault();
-        const y = section.getBoundingClientRect().top + window.scrollY - 80;
+        const y =
+          section.getBoundingClientRect().top + window.scrollY - headerOffset;
         gsap.to(window, {
           duration: 0.6,
           scrollTo: y,
@@ -75,8 +81,8 @@ export default function Footer({ sections }: FooterProps) {
     const makeTrigger = (section: HTMLElement, link: HTMLAnchorElement) => {
       const trigger = ScrollTrigger.create({
         trigger: section,
-        start: "top 70%",
-        end: "bottom 70%",
+        start: `top+=${headerOffset} 70%`,
+        end: `bottom-=${footerOffset} 70%`,
         onEnter: () => movePillTo(link),
         onEnterBack: () => movePillTo(link),
       });
@@ -102,7 +108,10 @@ export default function Footer({ sections }: FooterProps) {
   }, [sections]);
 
   return (
-    <footer className="fixed bottom-0 left-0 w-full h-16 bg-black z-50 flex items-center">
+    <footer
+      ref={footerRef}
+      className="fixed bottom-0 left-0 w-full h-16 bg-black z-50 flex items-center"
+    >
       <div ref={wrapperRef} id="footerWrapper" className="relative mx-auto">
         <nav className="relative inline-flex items-center justify-center space-x-4 text-white text-sm font-semibold">
           <div
