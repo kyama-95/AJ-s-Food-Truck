@@ -1,3 +1,6 @@
+import logoIcon from "../assets/AJBS_LogoIcon_250x250.png";
+import navItems from "../data/navItems";
+
 type HeaderProps = {
   mobileOpen: boolean;
   onToggleMobile: () => void;
@@ -12,14 +15,20 @@ export default function Header({
   return (
     <header className="w-full border-b bg-white fixed top-0 z-50">
       <div className="w-full px-4 py-3 flex justify-between items-center">
-        <div className="text-2xl font-black">AJBS</div>
+        <div className="flex items-center gap-3">
+          <img
+            src={logoIcon}
+            alt="AJBS logo"
+            className="h-9 w-9 object-contain"
+          />
+        </div>
 
         <nav className="hidden sm:flex space-x-6 text-sm font-semibold">
-          <a href="#hero">AJBS</a>
-          <a href="#menu">MENU</a>
-          <a href="#locations">LOCATIONS</a>
-          <a href="#about">ABOUT</a>
-          <a href="#booking">BOOKING</a>
+          {navItems.map((item) => (
+            <a key={item.id} href={`#${item.id}`}>
+              {item.label}
+            </a>
+          ))}
         </nav>
 
         <button
@@ -37,21 +46,11 @@ export default function Header({
           mobileOpen ? "flex" : "hidden"
         } sm:hidden flex-col bg-white border-t px-4 py-3 space-y-3 text-base font-semibold`}
       >
-        <a href="#hero" onClick={onCloseMobile}>
-          AJBS
-        </a>
-        <a href="#menu" onClick={onCloseMobile}>
-          MENU
-        </a>
-        <a href="#locations" onClick={onCloseMobile}>
-          LOCATIONS
-        </a>
-        <a href="#about" onClick={onCloseMobile}>
-          ABOUT
-        </a>
-        <a href="#booking" onClick={onCloseMobile}>
-          BOOKING
-        </a>
+        {navItems.map((item) => (
+          <a key={item.id} href={`#${item.id}`} onClick={onCloseMobile}>
+            {item.label}
+          </a>
+        ))}
       </div>
     </header>
   );

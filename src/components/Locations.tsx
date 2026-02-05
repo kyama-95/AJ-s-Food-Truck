@@ -1,20 +1,31 @@
-import { useRef } from "react";
-import useScrollFades from "../hooks/useScrollFades";
+import { forwardRef, useRef } from "react";
+import useScrollFade from "../hooks/useScrollFade";
+import SectionTitle from "./SectionTitle";
 
-export default function Locations() {
-  const sectionRef = useRef<HTMLElement>(null);
-  useScrollFades(sectionRef);
+const Locations = forwardRef<HTMLElement>(function Locations(_, ref) {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const copyRef = useRef<HTMLParagraphElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+
+  useScrollFade(titleRef, { direction: "left" });
+  useScrollFade(copyRef, { direction: "right" });
+  useScrollFade(frameRef, { direction: "left" });
 
   return (
-    <section ref={sectionRef} id="locations" className="w-full pt-28 pb-32">
+    <section ref={ref} id="locations" className="w-full pt-28 pb-32">
       <div className="max-w-3xl mx-auto px-6">
-        <h2 className="text-4xl font-black mb-4 scroll-fade-left">LOCATIONS</h2>
-        <p className="mb-4 text-gray-700 scroll-fade-right">
+        <SectionTitle ref={titleRef} className="mb-4">
+          LOCATIONS
+        </SectionTitle>
+        <p ref={copyRef} className="mb-4 text-gray-700">
           Find us at a North Alabama location near you. Our schedule updates
           automatically.
         </p>
 
-        <div className="scroll-fade-left rounded-xl overflow-hidden shadow border w-full">
+        <div
+          ref={frameRef}
+          className="rounded-xl overflow-hidden shadow border w-full"
+        >
           <iframe
             src="https://calendar.google.com/calendar/embed?src=ajsbeefsupply%40gmail.com&ctz=America%2FChicago&mode=WEEK"
             className="w-full h-[600px]"
@@ -25,4 +36,6 @@ export default function Locations() {
       </div>
     </section>
   );
-}
+});
+
+export default Locations;

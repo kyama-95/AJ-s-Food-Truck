@@ -1,134 +1,128 @@
-import { useEffect, useRef } from "react";
+import { forwardRef, useMemo, useRef, useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import useScrollFade from "../hooks/useScrollFade";
+import SectionTitle from "./SectionTitle";
 
-export default function Booking() {
-  const formRef = useRef<HTMLFormElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
+type FormValues = {
+  name: string;
+  event_date: string;
+  location: string;
+  email: string;
+  phone: string;
+};
 
-  useEffect(() => {
-    const phoneInput = phoneRef.current;
-    const form = formRef.current;
-    const fields = form
-      ? Array.from(form.querySelectorAll<HTMLInputElement>("input[required]"))
-      : [];
+type FormErrors = Partial<Record<keyof FormValues, string>>;
 
-    const errorMessages: HTMLElement[] = [];
-    const inputHandlers = new Map<HTMLInputElement, (event: Event) => void>();
-    let submitHandler: ((event: Event) => void) | null = null;
-    let phoneHandler: ((event: Event) => void) | null = null;
+const Booking = forwardRef<HTMLElement>(function Booking(_, ref) {
+  const [values, setValues] = useState<FormValues>({
+    name: "",
+    event_date: "",
+    location: "",
+    email: "",
+    phone: "",
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
 
-    if (phoneInput) {
-      phoneHandler = (event: Event) => {
-        const target = event.target as HTMLInputElement;
-        let value = target.value.replace(/\D/g, "");
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  useScrollFade(titleRef, { direction: "left" });
 
-        if (value.length > 3 && value.length <= 6) {
-          value = `${value.slice(0, 3)}-${value.slice(3)}`;
-        } else if (value.length > 6) {
-          value = `${value.slice(0, 3)}-${value.slice(3, 6)}-${value.slice(6, 10)}`;
+  const validators = useMemo(
+    () => ({
+      name: (value: string) => {
+        if (!value.trim()) return "This field is required.";
+        if (value.trim().length < 2) return "Please enter at least 2 characters.";
+        if (!/^[A-Za-z ,.'-]+$/.test(value)) return "Please enter a valid name.";
+        return "";
+      },
+      event_date: (value: string) => {
+        if (!value) return "This field is required.";
+        return "";
+      },
+      location: (value: string) => {
+        if (!value.trim()) return "This field is required.";
+        if (value.trim().length < 3) return "Please enter at least 3 characters.";
+        if (!/^[A-Za-z0-9 ,.'-]+$/.test(value)) {
+          return "Please enter a valid location.";
         }
-
-        target.value = value;
-      };
-
-      phoneInput.addEventListener("input", phoneHandler);
-    }
-
-    fields.forEach((field) => {
-      const errorMessage = document.createElement("p");
-      errorMessage.className = "text-red-600 text-xs mt-1 hidden";
-      field.insertAdjacentElement("afterend", errorMessage);
-      errorMessages.push(errorMessage);
-
-      const handler = () => {
-        if (field.validity.valid) {
-          field.classList.remove("border-red-600");
-          errorMessage.classList.add("hidden");
-        } else {
-          field.classList.add("border-red-600");
-          errorMessage.classList.remove("hidden");
-
-          if (field.validity.valueMissing) {
-            errorMessage.textContent = "This field is required.";
-          } else if (field.validity.typeMismatch) {
-            errorMessage.textContent = "Please enter a valid value.";
-          } else if (field.validity.patternMismatch) {
-            if (field.name === "phone") {
-              errorMessage.textContent = "Format must be 555-123-4567.";
-            }
-          } else if (field.validity.tooShort) {
-            errorMessage.textContent = `Please enter at least ${field.minLength} characters.`;
-          } else {
-            errorMessage.textContent = "Invalid input.";
-          }
+        return "";
+      },
+      email: (value: string) => {
+        if (!value.trim()) return "This field is required.";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          return "Please enter a valid email.";
         }
-      };
-
-      field.addEventListener("input", handler);
-      inputHandlers.set(field, handler);
-    });
-
-    if (form) {
-      submitHandler = (event: Event) => {
-        let hasError = false;
-
-        fields.forEach((field) => {
-          if (!field.validity.valid) {
-            hasError = true;
-            field.classList.add("border-red-600");
-            const message = field.nextElementSibling as HTMLElement | null;
-            if (message) {
-              message.classList.remove("hidden");
-              if (field.validity.patternMismatch && field.name === "phone") {
-                message.textContent = "Format must be 555-123-4567.";
-              }
-            }
-          }
-        });
-
-        if (hasError) {
-          event.preventDefault();
-          alert("Please correct the highlighted fields before submitting.");
+        return "";
+      },
+      phone: (value: string) => {
+        if (!value.trim()) return "This field is required.";
+        if (!/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/.test(value)) {
+          return "Format must be 555-123-4567.";
         }
-      };
+        return "";
+      },
+    }),
+    []
+  );
 
-      form.addEventListener("submit", submitHandler);
-    }
+  const formatPhone = (raw: string) => {
+    const digits = raw.replace(/\D/g, "").slice(0, 10);
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+    return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`;
+  };
 
-    return () => {
-      if (phoneInput && phoneHandler) {
-        phoneInput.removeEventListener("input", phoneHandler);
+  const handleChange =
+    (field: keyof FormValues) =>
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const nextValue =
+        field === "phone" ? formatPhone(event.target.value) : event.target.value;
+      setValues((prev) => ({ ...prev, [field]: nextValue }));
+      if (errors[field]) {
+        setErrors((prev) => ({
+          ...prev,
+          [field]: validators[field](nextValue),
+        }));
       }
-
-      inputHandlers.forEach((handler, field) => {
-        field.removeEventListener("input", handler);
-      });
-
-      if (form && submitHandler) {
-        form.removeEventListener("submit", submitHandler);
-      }
-
-      errorMessages.forEach((message) => message.remove());
     };
-  }, []);
+
+  const handleBlur = (field: keyof FormValues) => () => {
+    setErrors((prev) => ({
+      ...prev,
+      [field]: validators[field](values[field]),
+    }));
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const nextErrors: FormErrors = {
+      name: validators.name(values.name),
+      event_date: validators.event_date(values.event_date),
+      location: validators.location(values.location),
+      email: validators.email(values.email),
+      phone: validators.phone(values.phone),
+    };
+
+    const hasErrors = Object.values(nextErrors).some(Boolean);
+    if (hasErrors) {
+      event.preventDefault();
+      setErrors(nextErrors);
+    }
+  };
 
   return (
-    <section id="booking" className="w-full pt-28 pb-40">
+    <section ref={ref} id="booking" className="w-full pt-28 pb-40">
       <div className="max-w-3xl mx-auto px-6">
-        <h2 className="text-4xl font-black mb-6 scroll-fade-left">
-          BOOKING / CONTACT
-        </h2>
-        <p className="mb-6 scroll-fade-right">
-          Fill out the contact form below and we’ll get connected.
-        </p>
+        <SectionTitle ref={titleRef}>BOOKING / CONTACT</SectionTitle>
+        <p className="mb-6">Fill out the contact form below and we’ll get connected.</p>
 
         <form
-          ref={formRef}
           name="booking"
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
-          action="/success/"
+          action="/success/index.html"
           className="space-y-4"
+          noValidate
+          onSubmit={handleSubmit}
         >
           <input type="hidden" name="form-name" value="booking" />
           <p className="hidden">
@@ -140,61 +134,101 @@ export default function Booking() {
           <div>
             <label className="block font-semibold mb-1">Name</label>
             <input
-              className="w-full border p-3 rounded"
+              className={`w-full border p-3 rounded ${errors.name ? "border-red-600" : ""}`}
               type="text"
               name="name"
-              required
-              pattern="[A-Za-z ,.'-]+"
-              minLength={2}
+              value={values.name}
+              onChange={handleChange("name")}
+              onBlur={handleBlur("name")}
+              aria-invalid={Boolean(errors.name)}
+              aria-describedby={errors.name ? "name-error" : undefined}
               placeholder="John Doe"
             />
+            {errors.name ? (
+              <p id="name-error" className="text-red-600 text-xs mt-1">
+                {errors.name}
+              </p>
+            ) : null}
           </div>
 
           <div>
             <label className="block font-semibold mb-1">Date of Event</label>
             <input
-              className="w-full border p-3 rounded"
+              className={`w-full border p-3 rounded ${errors.event_date ? "border-red-600" : ""}`}
               type="date"
               name="event_date"
-              required
+              value={values.event_date}
+              onChange={handleChange("event_date")}
+              onBlur={handleBlur("event_date")}
+              aria-invalid={Boolean(errors.event_date)}
+              aria-describedby={errors.event_date ? "event-date-error" : undefined}
             />
+            {errors.event_date ? (
+              <p id="event-date-error" className="text-red-600 text-xs mt-1">
+                {errors.event_date}
+              </p>
+            ) : null}
           </div>
 
           <div>
             <label className="block font-semibold mb-1">Event Location</label>
             <input
-              className="w-full border p-3 rounded"
+              className={`w-full border p-3 rounded ${errors.location ? "border-red-600" : ""}`}
               type="text"
               name="location"
-              required
-              pattern="[A-Za-z0-9 ,.'-]+"
-              minLength={3}
+              value={values.location}
+              onChange={handleChange("location")}
+              onBlur={handleBlur("location")}
+              aria-invalid={Boolean(errors.location)}
+              aria-describedby={errors.location ? "location-error" : undefined}
               placeholder="Huntsville, AL"
             />
+            {errors.location ? (
+              <p id="location-error" className="text-red-600 text-xs mt-1">
+                {errors.location}
+              </p>
+            ) : null}
           </div>
 
           <div>
             <label className="block font-semibold mb-1">Email</label>
             <input
-              className="w-full border p-3 rounded"
+              className={`w-full border p-3 rounded ${errors.email ? "border-red-600" : ""}`}
               type="email"
               name="email"
-              required
+              value={values.email}
+              onChange={handleChange("email")}
+              onBlur={handleBlur("email")}
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={errors.email ? "email-error" : undefined}
               placeholder="you@example.com"
             />
+            {errors.email ? (
+              <p id="email-error" className="text-red-600 text-xs mt-1">
+                {errors.email}
+              </p>
+            ) : null}
           </div>
 
-            <div>
-              <label className="block font-semibold mb-1">Phone Number</label>
-              <input
-                ref={phoneRef}
-                className="w-full border p-3 rounded"
-                type="tel"
+          <div>
+            <label className="block font-semibold mb-1">Phone Number</label>
+            <input
+              className={`w-full border p-3 rounded ${errors.phone ? "border-red-600" : ""}`}
+              type="tel"
               name="phone"
-              required
-              pattern="^\\d{3}-\\d{3}-\\d{4}$"
+              inputMode="numeric"
+              value={values.phone}
+              onChange={handleChange("phone")}
+              onBlur={handleBlur("phone")}
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby={errors.phone ? "phone-error" : undefined}
               placeholder="555-123-4567"
             />
+            {errors.phone ? (
+              <p id="phone-error" className="text-red-600 text-xs mt-1">
+                {errors.phone}
+              </p>
+            ) : null}
           </div>
 
           <button className="bg-black text-white px-4 py-3 w-full rounded font-semibold">
@@ -204,4 +238,6 @@ export default function Booking() {
       </div>
     </section>
   );
-}
+});
+
+export default Booking;

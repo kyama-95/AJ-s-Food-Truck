@@ -1,24 +1,34 @@
 import { useEffect, useRef } from "react";
+import type { RefObject } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-export default function Footer() {
+type FooterSection = {
+  id: string;
+  label: string;
+  ref: RefObject<HTMLElement>;
+};
+
+type FooterProps = {
+  sections: FooterSection[];
+};
+
+export default function Footer({ sections }: FooterProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const navRef = useRef<HTMLElement>(null);
   const pillRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Array<HTMLAnchorElement | null>>([]);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
-    const nav = navRef.current;
     const pill = pillRef.current;
 
-    if (!wrapper || !nav || !pill) return;
+    if (!wrapper || !pill) return;
 
     gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-    const links = Array.from(
-      nav.querySelectorAll<HTMLAnchorElement>(".footer-link")
+    const links = linkRefs.current.filter(
+      (link): link is HTMLAnchorElement => Boolean(link)
     );
     const linkHandlers = new Map<HTMLAnchorElement, (event: Event) => void>();
     const triggers: ScrollTrigger[] = [];
@@ -42,10 +52,8 @@ export default function Footer() {
       });
     };
 
-    links.forEach((link) => {
-      const id = link.getAttribute("data-target");
-      const section = id ? document.querySelector<HTMLElement>(`#${id}`) : null;
-
+    links.forEach((link, index) => {
+      const section = sections[index]?.ref.current;
       if (!section) return;
 
       const handler = (event: Event) => {
@@ -64,10 +72,7 @@ export default function Footer() {
       linkHandlers.set(link, handler);
     });
 
-    const makeTrigger = (sectionId: string, link: HTMLAnchorElement) => {
-      const section = document.querySelector<HTMLElement>(sectionId);
-      if (!section) return;
-
+    const makeTrigger = (section: HTMLElement, link: HTMLAnchorElement) => {
       const trigger = ScrollTrigger.create({
         trigger: section,
         start: "top 70%",
@@ -78,14 +83,14 @@ export default function Footer() {
       triggers.push(trigger);
     };
 
-    if (links.length === 5) {
-      const [ajbs, menu, loc, about, booking] = links;
-      makeTrigger("#hero", ajbs);
-      makeTrigger("#menu", menu);
-      makeTrigger("#locations", loc);
-      makeTrigger("#about", about);
-      makeTrigger("#booking", booking);
-      movePillTo(ajbs, true);
+    links.forEach((link, index) => {
+      const section = sections[index]?.ref.current;
+      if (!section) return;
+      makeTrigger(section, link);
+    });
+
+    if (links.length > 0) {
+      movePillTo(links[0], true);
     }
 
     return () => {
@@ -94,37 +99,31 @@ export default function Footer() {
         link.removeEventListener("click", handler);
       });
     };
-  }, []);
+  }, [sections]);
 
   return (
     <footer className="fixed bottom-0 left-0 w-full h-16 bg-black z-50 flex items-center">
       <div ref={wrapperRef} id="footerWrapper" className="relative mx-auto">
-        <nav
-          ref={navRef}
-          id="footerNav"
-          className="relative inline-flex items-center justify-center space-x-4 text-white text-sm font-semibold"
-        >
+        <nav className="relative inline-flex items-center justify-center space-x-4 text-white text-sm font-semibold">
           <div
             ref={pillRef}
             id="pill"
             className="absolute top-1/2 -translate-y-1/2 left-0 h-7 bg-white rounded-full -z-10"
           ></div>
 
-          <a href="#hero" data-target="hero" className="footer-link">
-            AJBS
-          </a>
-          <a href="#menu" data-target="menu" className="footer-link">
-            MENU
-          </a>
-          <a href="#locations" data-target="locations" className="footer-link">
-            LOCATIONS
-          </a>
-          <a href="#about" data-target="about" className="footer-link">
-            ABOUT
-          </a>
-          <a href="#booking" data-target="booking" className="footer-link">
-            BOOKING
-          </a>
+          {sections.map((section, index) => (
+            <a
+              key={section.id}
+              ref={(node) => {
+                linkRefs.current[index] = node;
+              }}
+              href={`#${section.id}`}
+              data-target={section.id}
+              className="footer-link"
+            >
+              {section.label}
+            </a>
+          ))}
         </nav>
       </div>
     </footer>

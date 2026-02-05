@@ -1,15 +1,21 @@
-import { useRef } from "react";
-import useScrollFades from "../hooks/useScrollFades";
+import { forwardRef, useRef } from "react";
+import useScrollFade from "../hooks/useScrollFade";
+import SectionTitle from "./SectionTitle";
 
-export default function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-  useScrollFades(sectionRef);
+const About = forwardRef<HTMLElement>(function About(_, ref) {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const copyRef = useRef<HTMLParagraphElement>(null);
+
+  useScrollFade(titleRef, { direction: "left" });
+  useScrollFade(copyRef, { direction: "right" });
 
   return (
-    <section ref={sectionRef} id="about" className="w-full pt-28 pb-32">
+    <section ref={ref} id="about" className="w-full pt-28 pb-32">
       <div className="max-w-3xl mx-auto px-6">
-        <h2 className="text-4xl font-black mb-4 scroll-fade-left">ABOUT</h2>
-        <p className="text-gray-700 scroll-fade-right leading-relaxed">
+        <SectionTitle ref={titleRef} className="mb-4">
+          ABOUT
+        </SectionTitle>
+        <p ref={copyRef} className="text-gray-700 leading-relaxed">
           Established in Huntsville, Alabama in 2025, AJ’S Beef Supply is a food
           truck serving a beef-driven menu—a rolling tribute to the beef dishes
           discovered during travels in Hawaii, Seattle, Portland, and Los
@@ -18,4 +24,6 @@ export default function About() {
       </div>
     </section>
   );
-}
+});
+
+export default About;
